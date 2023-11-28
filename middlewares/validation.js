@@ -1,6 +1,5 @@
 const { celebrate, Joi, Segments } = require('celebrate');
-
-const url = /\b(https?):\/\/(www\.)?[-A-Za-z0-9-._~:/?#[\]@!$&'()*+,;=]+\.([a-z]{2,6})+(\/[-A-Za-z0-9-._~:/?#[\]@!$&'()*+,;=]*)*/;
+const validator = require('validator');
 
 const validationLog = celebrate({
   [Segments.BODY]: {
@@ -14,33 +13,51 @@ const validationCreateUser = celebrate({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(url),
   },
 });
 
 const validationUpdateInfo = celebrate({
   [Segments.BODY]: {
-    name: Joi.string().min(2).max(30).required(),
-    about: Joi.string().min(2).max(30).required(),
+    name: Joi.string().min(2).max(30),
+    email: Joi.string().required().email(),
   },
 });
 
 const validationCreateMovie = celebrate({
   [Segments.BODY]: {
-    name: Joi.string().min(2).max(30).required(),
-    link: Joi.string().pattern(url).required(),
+    country: Joi.string().required(),
+    director: Joi.string().required(),
+    duration: Joi.number().required(),
+    year: Joi.string().required(),
+    description: Joi.string().required(),
+    image: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле image не является ссылкой');
+    }),
+    trailerLink: Joi.string().required(),
+    thumbnail: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле thumbnail не является ссылкой');
+    }),
+    movieId: Joi.number().required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
+    owner: Joi.string().required(),
   },
 });
 
-const validationMovieId = celebrate({
+const validationDeleteMovie = celebrate({
   [Segments.PARAMS]: {
-    cardId: Joi.string().length(24).hex().required(),
+    movieId: Joi.string().hex().length(24),
   },
 });
 
 module.exports = {
-  validationMovieId,
+  validationDeleteMovie,
   validationCreateMovie,
   validationCreateUser,
   validationLog,
