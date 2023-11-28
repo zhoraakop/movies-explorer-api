@@ -11,7 +11,7 @@ const ForbiddenError = require('../errors/ForbiddenError');
 const getMovies = (req, res, next) => {
   movieModel.find({ 'owner': req.user._id })
     .then((movies) => res.status(HTTP_STATUS_OK).send(movies))
-    .catch((error) => next(error));
+    .catch((err) => next(err));
 };
 
 const createMovie = (req, res, next) => {
@@ -43,11 +43,11 @@ const createMovie = (req, res, next) => {
     nameEN,
   })
     .then((movie) => res.status(HTTP_STATUS_CREATED).send(movie))
-    .catch((error) => {
-      if (error.name === 'ValidationError') {
-        next(new BadRequestError(`Переданы некорректные данные для создания фильма ${error.message}`));
+    .catch((err) => {
+      if (err.name === 'Validationerr') {
+        next(new BadRequestError(`Переданы некорректные данные`));
       } else {
-        next(error);
+        next(err);
       }
     });
 };
@@ -66,11 +66,11 @@ const deleteMovie = (req, res, next) => {
           .catch(next);
       }
     })
-    .catch((error) => {
-      if (error.name === 'CastError') {
+    .catch((err) => {
+      if (err.name === 'CastError') {
         next(new BadRequestError('Удаление фильма с некорректным id'));
       } else {
-        next(error);
+        next(err);
       }
     });
 };

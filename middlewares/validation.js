@@ -1,5 +1,4 @@
 const { celebrate, Joi, Segments } = require('celebrate');
-const validator = require('validator');
 
 const validationLog = celebrate({
   [Segments.BODY]: {
@@ -30,19 +29,9 @@ const validationCreateMovie = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().custom((value, helpers) => {
-      if (validator.isURL(value)) {
-        return value;
-      }
-      return helpers.message('Поле image не является ссылкой');
-    }),
+    image: Joi.string().required(),
     trailerLink: Joi.string().required(),
-    thumbnail: Joi.string().required().custom((value, helpers) => {
-      if (validator.isURL(value)) {
-        return value;
-      }
-      return helpers.message('Поле thumbnail не является ссылкой');
-    }),
+    thumbnail: Joi.string().required(),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
