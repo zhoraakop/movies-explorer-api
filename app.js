@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
@@ -13,6 +14,7 @@ mongoose
 const app = express();
 const { PORT = 3000 } = process.env;
 
+app.use(cors());
 app.use(express.json());
 app.use(errors());
 app.use(cookieParser());
