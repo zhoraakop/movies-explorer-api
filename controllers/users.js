@@ -84,6 +84,9 @@ const updateUserById = (req, res, next) => {
     })
     .then((user) => res.status(HTTP_STATUS_OK).send(user))
     .catch((err) => {
+      if (err.message === 'ConflictError') {
+        return next(new ConflictError('Конфликт данных'));
+      }
       if (err.message === 'NotFoundError') {
         return next(new NotFoundError('Пользователь не найден'));
       }
