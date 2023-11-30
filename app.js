@@ -6,9 +6,12 @@ const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
 const errorHandler = require('./middlewares/error-handler');
 
+const {
+  PORT = 3000
+} = process.env;
 
 mongoose
-  .connect(`${process.env.DB}`, {
+  .connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
     useNewUrlParser: true,
   }).then(() => console.log('CONNECTED TO MONGODB'));
 
@@ -24,4 +27,4 @@ app.use(errorHandler);
 
 
 
-app.listen(process.env.PORT);
+app.listen(PORT);
