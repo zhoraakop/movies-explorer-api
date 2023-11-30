@@ -8,12 +8,12 @@ const movies = require('./movie');
 const { validationCreateUser, validationLog } = require('../middlewares/validation');
 const NotFoundError = require('../errors/NotFoundError');
 
-router.post('/signup', validationCreateUser, createUser);
-router.post('/signin', validationLog, login);
+router.post('/api/signup', validationCreateUser, createUser);
+router.post('/api/signin', validationLog, login);
 
 router.use(auth);
-router.use('/users', users);
-router.use('/movies', movies);
+router.use('/api/users', users);
+router.use('/api/movies', movies);
 router.use('*', (req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
 });
