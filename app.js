@@ -7,7 +7,7 @@ const router = require('./routes/index');
 const errorHandler = require('./middlewares/error-handler');
 
 const {
-  PORT
+  PORT = 3000
 } = process.env;
 
 mongoose
