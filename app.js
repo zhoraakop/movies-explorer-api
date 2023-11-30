@@ -7,12 +7,11 @@ const router = require('./routes/index');
 const errorHandler = require('./middlewares/error-handler');
 
 const {
-  PORT,
-  DB
+  PORT
 } = process.env;
 
 mongoose
-  .connect(`${DB}`, {
+  .connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
     useNewUrlParser: true,
   }).then(() => console.log('CONNECTED TO MONGODB'));
 
