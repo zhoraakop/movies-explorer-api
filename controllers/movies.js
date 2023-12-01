@@ -9,7 +9,7 @@ const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
 const getMovies = (req, res, next) => {
-  movieModel.find({ 'owner': req.user._id })
+  movieModel.find({ owner: req.user._id })
     .then((movies) => res.status(HTTP_STATUS_OK).send(movies))
     .catch((err) => next(err));
 };
@@ -45,7 +45,7 @@ const createMovie = (req, res, next) => {
     .then((movie) => res.status(HTTP_STATUS_CREATED).send(movie))
     .catch((err) => {
       if (err.name === 'Validationerr') {
-        next(new BadRequestError(`Переданы некорректные данные`));
+        next(new BadRequestError('Переданы некорректные данные'));
       } else {
         next(err);
       }
@@ -79,4 +79,4 @@ module.exports = {
   createMovie,
   deleteMovie,
   getMovies,
-}
+};
