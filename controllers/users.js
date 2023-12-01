@@ -84,8 +84,8 @@ const updateUserById = (req, res, next) => {
     })
     .then((user) => res.status(HTTP_STATUS_OK).send(user))
     .catch((err) => {
-      if (err.message === 'ConflictError') {
-        return next(new ConflictError('Конфликт данных'));
+      if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким email уже зарегистрирован'));
       }
       if (err.message === 'NotFoundError') {
         return next(new NotFoundError('Пользователь не найден'));
