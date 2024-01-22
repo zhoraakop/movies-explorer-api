@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(router);
-app.use(errorLogger());
+app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
