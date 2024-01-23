@@ -14,6 +14,7 @@ const {
 mongoose
   .connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
     useNewUrlParser: true,
+    family: 4,
   }).then(() => console.log('CONNECTED TO MONGODB'));
 
 const app = express();
