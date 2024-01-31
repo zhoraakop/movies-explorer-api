@@ -27,6 +27,10 @@ const login = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+const logout = (req, res) => {
+  res.clearCookie('jwt').send('{ TOKEN_DELETED }');
+};
+
 const createUser = (req, res, next) => {
   const {
     email,
@@ -102,4 +106,5 @@ module.exports = {
   createUser,
   getCurrentUser,
   updateUserById,
+  logout,
 };
